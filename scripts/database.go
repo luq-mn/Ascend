@@ -1,4 +1,4 @@
-package scripts
+package ardent
 
 import (
 	"database/sql"
@@ -11,4 +11,6 @@ func DatabaseConnect(location string) (db *sql.DB, err error) {
 	if err!= nil {
 		panic(err)
 	}
+
+	return db, nil
 }

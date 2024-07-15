@@ -1,4 +1,4 @@
-module main
+module ascend
 
 go 1.22.5
 
