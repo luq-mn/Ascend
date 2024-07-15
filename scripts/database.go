@@ -31,3 +31,7 @@ func DatabaseQuery(db *sql.DB, query string) *sql.Rows {
 
 	return rows
 }
+
+func DatabaseClose(db *sql.DB) {
+	db.Close()
+}

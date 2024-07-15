@@ -26,3 +26,7 @@ func GetGroups(db *sql.DB) ([]string) {
 
 	return groups
 }
+
+func CreateGroup(db *sql.DB, name string) {
+	db.Exec("INSERT INTO groups (name) VALUES (?)", name)
+}

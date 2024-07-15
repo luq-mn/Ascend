@@ -45,6 +45,10 @@ func DataFolder() (string) {
 		}
 		fmt.Println("Folder created successfully.")
 
+		db := DatabaseConnect(filepath.Join(saveFolder, "test.db"))
+		DatabaseExec(db, "CREATE TABLE IF NOT EXISTS groups (name TEXT PRIMARY KEY, description TEXT)")
+		DatabaseClose(db)
+
 		return saveFolder
 
 	} else if err != nil {
