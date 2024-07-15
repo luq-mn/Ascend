@@ -22,3 +22,12 @@ func DatabaseExec(db *sql.DB, query string) {
 		panic(err)
 	}
 }
+
+func DatabaseQuery(db *sql.DB, query string) *sql.Rows {
+	rows, err := db.Query(query)
+	if err != nil {
+		panic(err)
+	}
+
+	return rows
+}
