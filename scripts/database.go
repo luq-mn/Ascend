@@ -6,11 +6,18 @@ import (
 )
 
 // DatabaseConnect opens a connection to a sqlite3 database.
-func DatabaseConnect(location string) (db *sql.DB, err error) {
-	db, err = sql.Open("sqlite3", location)
-	if err!= nil {
+func DatabaseConnect(location string) *sql.DB {
+	db, err := sql.Open("sqlite3", location)
+	if err != nil {
 		panic(err)
 	}
 
-	return db, nil
+	return db
+}
+
+func DatabaseExec(db *sql.DB, query string) {
+	_, err := db.Exec(query)
+	if err != nil {
+		panic(err)
+	}
 }
