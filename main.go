@@ -35,6 +35,13 @@ func main() {
 	
 	db:= ardent.DatabaseConnect(filepath.Join(saveFolder, "test.db"))
 
+	// Print out all tasks
+	ardent.ConsoleClear()
+	fmt.Printf("Folder: %s \n", saveFolder)
+
+	
+
+	// Database things
 	ardent.DatabaseExec(db, "CREATE TABLE IF NOT EXISTS test (id INTEGER, users TEXT)")
 	ardent.DatabaseExec(db, "INSERT INTO test (id, users) VALUES (1, 'luqman')")
 }

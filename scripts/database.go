@@ -5,7 +5,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-// DatabaseConnect opens a connection to a sqlite3 database.
+// DatabaseConnect opens a connection to a SQLite database.
 func DatabaseConnect(location string) *sql.DB {
 	db, err := sql.Open("sqlite3", location)
 	if err != nil {
@@ -15,6 +15,7 @@ func DatabaseConnect(location string) *sql.DB {
 	return db
 }
 
+// Executes a query to the database
 func DatabaseExec(db *sql.DB, query string) {
 	_, err := db.Exec(query)
 	if err != nil {
