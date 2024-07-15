@@ -1,48 +1,39 @@
 package main
 
 import (
-	"os"
-	"strings"
+	// "os"
+	// "strings"
 	"fmt"
 	"ascend/scripts"
 	"path/filepath"
     _ "github.com/mattn/go-sqlite3"
 )
 
-var save_path string
 func main() {
 	ardent.ConsoleClear()
-	fmt.Println("ASCEND")
+	fmt.Printf("ASCEND\nTasks with scores\n\n")
 
-	fmt.Println("[1] Connect to a save folder\n[2] Create a new one")
-	fmt.Printf("Select an option [1/2]: ")
-	option := strings.TrimSpace(ardent.ConsoleRead())
-	switch option {
-	case "1":
-		// Get the path to the save folder
-		fmt.Printf("Path to the save folder: ")
-		save_path = strings.TrimSpace(ardent.ConsoleRead())
+	dataFolder := ardent.DataFolder()
 
-	case "2":
-		// Create the folder
-		fmt.Printf("Folder name: ")
-		folder_name := strings.TrimSpace(ardent.ConsoleRead())
-		fmt.Printf("Location: ")
-		folder_location := strings.TrimSpace(ardent.ConsoleRead())
+	// Print out all the folders
+	allSaveFolders := ardent.GetFiles(dataFolder)
 
-		err := os.MkdirAll(filepath.Join(folder_location, folder_name), 0755)
-		if err != nil {
-			panic(fmt.Sprintf("Failed to create folder: %v", err))
+	if len(allSaveFolders) == 0 {
+		fmt.Println("No save folders found.")
+	} else {
+		fmt.Println("Save folders:")
+		for _, folder := range allSaveFolders {
+			fmt.Printf("- %s\n", folder)
 		}
-		fmt.Println("Folder created successfully.")
-
-		save_path = filepath.Join(folder_location, folder_name)
-
-	default:
-		panic("Invalid option. Please select either 1 or 2.")
 	}
+	fmt.Println("\nEnter name of a listed folder, if it does not exist, we'll create a new one")
+
+	// Enter folder name
+	fmt.Printf("Folder name: ")
+	saveFolder := ardent.ConsoleRead()
+	saveFolder = ardent.SaveFolder(saveFolder)
 	
-	db:= ardent.DatabaseConnect(filepath.Join(save_path, "test.db"))
+	db:= ardent.DatabaseConnect(filepath.Join(saveFolder, "test.db"))
 
 	ardent.DatabaseExec(db, "CREATE TABLE IF NOT EXISTS test (id INTEGER, users TEXT)")
 	ardent.DatabaseExec(db, "INSERT INTO test (id, users) VALUES (1, 'luqman')")
